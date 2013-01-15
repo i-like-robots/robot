@@ -1,19 +1,18 @@
 node_modules
+tests/data/output
 
 .c9revisions
 .DS_Store
-.bak
+.idea
+.svn
 
 *.gz
 *.db
 *.log
-*.csv
+*.bak
 *.dat
 *.out
 *.pid
 *.seed
 *.sublime-project
 *.sublime-workspace
-
-npm-debug.log
-Thumbs.db

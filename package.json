@@ -1,7 +1,7 @@
 {
   "name": "robot",
   "description": "",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "keywords": [
     "flat",
     "static",
@@ -16,7 +16,7 @@
   "bugs": "https://github.com/i-like-robots/robot/issues",
   "author": {
     "name": "Matt Hinchliffe",
-    "email": "<matt+robot@maketea.co.uk>",
+    "email": "<matt+npm@maketea.co.uk>",
     "url": "http://maketea.co.uk"
   },
   "dependencies": {
@@ -24,8 +24,6 @@
     "nunjucks": "0.1.x",
     "underscore": "1.x",
     "optimist": "0.3.x"
-  },
-  "devDependencies": {
   },
   "bin": {
     "robot": "./bin/robot"
