@@ -4,9 +4,5 @@
   "output": "output/",
   "source": "source/",
   "verbose": 0,
-  "site": {
-    "title": "Welcome to Robot",
-    "url": "http://localhost",
-    "path": "/"
-  }
+  "site": {}
 }

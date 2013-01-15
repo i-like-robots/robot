@@ -1,11 +1,17 @@
-
 <html lang="en">
 <head>
   <title>{{ title }} | {{ site.title }}</title>
+  <link rel="canonical" href="{{ site.url }}{{ site.path }}">
 </head>
 <body>
 
-  {% block body %}{% endblock %}
+  {% include "header.html" %}
+
+  <section role="main">
+    {% block body %}{% endblock %}
+  </section>
+
+  {% include "footer.html" %}
 
 </body>
 </html>

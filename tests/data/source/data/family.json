@@ -1,0 +1,22 @@
+{
+  "David": {
+    "age": 62,
+    "occupation": "Retired",
+    "residence": "Devon"
+  },
+  "Susan": {
+    "age": 59,
+    "occupation": "Retired",
+    "residence": "Devon"
+  },
+  "Matt": {
+    "age": 25,
+    "occupation": "Web Developer",
+    "residence": "London"
+  },
+  "Laura": {
+    "age": 28,
+    "occupation": "Doctor",
+    "residence": "Bristol"
+  }
+}

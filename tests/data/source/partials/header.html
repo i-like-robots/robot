@@ -1,14 +1,7 @@
 <header id="site-header">
-  <h1>
-    {{ title }}
-  </h1>
+  <a href="{{ site.path }}" rel="logo">{{ site.title }}</a>
   <nav role="navigation">
-    <ul id="site-navigation">
-      {% for item in navigation %}
-        <li>
-          <a href="{{ item.href }}">{{ item.text }}</a>
-        </li>
-      {% endfor %}
-    </ul>
+    <a href="{{ site.path }}">Home</a>
+    <a href="{{ site.path }}about.html">About</a>
   </nav>
 </header>

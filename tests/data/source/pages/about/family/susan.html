@@ -1,4 +1,5 @@
-{% set title = 'About' %}
+{% set title = 'Susan' %}
+{% set bio = data.family[title] %}
 {% extends 'default.html' %}
 
 {% block body %}
@@ -15,17 +16,36 @@
     vehicula vel in mi.
   </p>
 
-  <a href="about/history.html">History</a>
+  <dl>
+    <dt>
+      Age
+    </dt>
+    <dd>
+      {{ bio.age }}
+    </dd>
+    <dt>
+      Occupation
+    </dt>
+    <dd>
+      {{ bio.occupation }}
+    </dd>
+    <dt>
+      Residence
+    </dt>
+    <dd>
+      {{ bio.residence }}
+    </dd>
+  </dl>
 
   <hr>
 
   <h2>
-    Family members
+    Other family members
   </h2>
 
   {% for person, bio in data.family %}
     <li>
-      <a href="about/family/{{ person|lower }}.html">{{ person }}</a>
+      <a href="{{ person|lower }}.html">{{ person }}</a>
     </li>
   {% endfor %}
 
