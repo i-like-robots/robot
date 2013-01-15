@@ -1,7 +1,7 @@
 {
   "name": "robot",
   "description": "",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "keywords": [
     "flat",
     "static",
@@ -9,9 +9,10 @@
     "generator",
     "prototype"
   ],
+  "homepage": "https://github.com/i-like-robots/robot",
   "repository": {
     "type": "git",
-    "url": "https://github.com/i-like-robots/robot.git"
+    "url": "git@github.com:i-like-robots/robot.git"
   },
   "bugs": "https://github.com/i-like-robots/robot/issues",
   "author": {
@@ -20,10 +21,11 @@
     "url": "http://maketea.co.uk"
   },
   "dependencies": {
-    "walkdir": "0.x",
-    "nunjucks": "0.1.x",
+    "mkdirp": ">= 0.3.0",
+    "walkdir": ">= 0.0.5",
+    "nunjucks": ">= 0.1.5",
     "underscore": "1.x",
-    "optimist": "0.3.x"
+    "optimist": ">= 0.3.5"
   },
   "bin": {
     "robot": "./bin/robot"
