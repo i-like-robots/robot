@@ -1,0 +1,36 @@
+{
+  "name": "robot",
+  "description": "",
+  "version": "0.0.1",
+  "keywords": [
+    "flat",
+    "static",
+    "website",
+    "generator",
+    "prototype"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/i-like-robots/robot.git"
+  },
+  "bugs": "https://github.com/i-like-robots/robot/issues",
+  "author": {
+    "name": "Matt Hinchliffe",
+    "email": "<matt+robot@maketea.co.uk>",
+    "url": "http://maketea.co.uk"
+  },
+  "dependencies": {
+    "walkdir": "0.x",
+    "nunjucks": "0.1.x",
+    "underscore": "1.x",
+    "optimist": "0.3.x"
+  },
+  "devDependencies": {
+  },
+  "bin": {
+    "still": "./bin/robot"
+  }
+  "engines": {
+    "node": ">=0.8.0"
+  }
+}

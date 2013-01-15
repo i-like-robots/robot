@@ -1,0 +1,14 @@
+<header id="site-header">
+  <h1>
+    {{ title }}
+  </h1>
+  <nav role="navigation">
+    <ul id="site-navigation">
+      {% for item in navigation %}
+        <li>
+          <a href="{{ item.href }}">{{ item.text }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </nav>
+</header>

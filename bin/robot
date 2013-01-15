@@ -1,0 +1,30 @@
+#!/usr/bin/env node
+
+var Robot = require('../');
+var optimist = require('optimist');
+
+var cmd = optimist
+  .usage('Usage: robot [path] -s [source] -o [output] [flags]')
+  .describe({
+    s: 'Source dir',
+    o: 'Output dir',
+    help: 'Display help',
+    verbose: 'Verbose output'
+  })
+  .alias('s', 'source')
+  .alias('o', 'output');
+
+var opts = cmd.argv;
+
+if (opts.help) {
+  optimist.showHelp();
+  process.exit(1);
+}
+
+var path = process.cwd();
+
+if (opts._.length) {
+  path = path + '/' + opts._.pop()
+}
+
+new Robot(path, opts).build();
