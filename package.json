@@ -28,8 +28,8 @@
   "devDependencies": {
   },
   "bin": {
-    "still": "./bin/robot"
-  }
+    "robot": "./bin/robot"
+  },
   "engines": {
     "node": ">=0.8.0"
   }
