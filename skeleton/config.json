@@ -1,9 +1,4 @@
 {
-  "output": "output/",
   "source": "source/",
-  "site": {
-    "title": "Welcome to Robot",
-    "url": "http://localhost",
-    "path": "/"
-  }
+  "output": "output/"
 }
