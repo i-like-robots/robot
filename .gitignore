@@ -1,5 +1,5 @@
-node_modules
-tests/data/output
+node_modules/
+tests/temp/
 
 .c9revisions
 .DS_Store

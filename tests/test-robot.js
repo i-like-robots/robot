@@ -1,49 +1,83 @@
-var should = require('should');
+var fs = require('fs');
+var assert = require('assert');
 var Robot = require('../lib/robot');
 
-var __instance;
-var __source = __dirname + '/../skeleton/';
-var __config = {
+var source = __dirname + '/../skeleton/';
+var temp = __dirname + '/temp/';
+var config = {
   default: require('../default.config.json'),
   local: require('../skeleton/config.json'),
   test: require('./test.config.json')
-}
+};
 
-beforeEach(function() {
-  __instance = new Robot(__source, __config.test);
+//
+// Constructor
+//
+suite('Constructor', function() {
+
+  var instance;
+
+  setup(function() {
+    instance = new Robot(source, config.test);
+  });
+
+  teardown(function() {
+    instance = null;
+  });
+
+  test('Should return an instance of robot', function() {
+    assert.ok(instance instanceof Robot);
+  });
+
+  test('Should return a new instance of robot', function() {
+    var instanceB = new Robot(source);
+    assert.notEqual(instance, instanceB);
+  });
+
+  test('Should have default.config.json options', function() {
+    assert.equal(instance.options.verbose, config.default.verbose);
+  });
+
+  test('Should have local config.json options', function() {
+    assert.equal(instance.options.source, config.local.source);
+  });
+
+  test('Should have test.config.json options', function() {
+    assert.equal(instance.options.output, config.test.output);
+  });
+
 });
 
-afterEach(function() {
-  __instance = null;
-});
+//
+// File system
+//
+suite('File system', function() {
 
-describe('Constructor and Options', function() {
+  var instance;
+  var target = temp + 'test.html';
+  var testStr = '<p>Hello World</p>';
 
-  describe('Instance', function() {
-    it('Should return an instance of robot', function() {
-      __instance.should.be.an.instanceOf(Robot);
-    });
+  setup(function() {
+    instance = new Robot(source, config.test);
+  });
 
-    it('Should return a new instance of robot', function() {
-      var instanceB = new Robot(__source); // no test config
-      __instance.should.not.equal(instanceB);
+  teardown(function() {
+    instance = null;
+  });
+
+  test('Save file', function(done) {
+    instance.saveFile(target, testStr, function() {
+      fs.exists(target, function(exists) {
+        assert.ok(exists);
+        done();
+      });
     });
   });
 
-  describe('Options', function() {
-    it('Should have default.config.json options', function() {
-      should.exist(__instance.options.verbose);
-      __instance.options.verbose.should.equal(__config.default.verbose);
-    });
-
-    it('Should have local config.json options', function() {
-      should.exist(__instance.options.source);
-      __instance.options.source.should.equal(__config.local.source);
-    });
-
-    it('Should have test.config.json options', function() {
-      should.exist(__instance.options.output);
-      __instance.options.output.should.equal(__config.test.output);
+  test('Save file contents', function(done) {
+    fs.readFile(target, 'utf-8', function(err, data) {
+      assert.equal(testStr, data);
+      done();
     });
   });
 
