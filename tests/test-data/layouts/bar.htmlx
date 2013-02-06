@@ -4,14 +4,13 @@
 </head>
 <body>
 
-  {{> header }}
+  {{> header.html}}
 
   <section role="main">
-    {{{ content }}}
+    {{{ yield }}}
   </section>
 
-  {{> footer }}
+  {{> footer.html }}
 
 </body>
 </html>
-<!-- Generated on {{ env.datetime }} by Robot -->

@@ -27,4 +27,4 @@ if (opts._.length) {
   path = path + '/' + opts._.pop()
 }
 
-new Robot(path, opts).build();
+new Robot(path, opts).compile();

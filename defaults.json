@@ -1,6 +1,5 @@
 {
   "ignore": ["_*", ".*"],
-  "render": [".html", ".xml"],
   "source": "",
   "output": "",
   "verbose": 0

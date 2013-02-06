@@ -1,7 +1,7 @@
 {
   "name": "robot",
-  "description": "",
-  "version": "0.0.5",
+  "description": "A feature limited, Mustache-powered static HTML generator for prototyping or very simple websites. Similar to FireApp, Hammer or Mixture but with the speed and cross-platform compatibility of Node.js.",
+  "version": "0.0.6",
   "keywords": [
     "flat",
     "static",
@@ -23,7 +23,8 @@
   "dependencies": {
     "mkdirp": ">= 0.3.0",
     "walkdir": ">= 0.0.5",
-    "nunjucks": ">= 0.1.5",
+    "js-yaml": "1.x",
+    "mustache": ">= 0.7.2",
     "underscore": "1.x",
     "optimist": ">= 0.3.5"
   },

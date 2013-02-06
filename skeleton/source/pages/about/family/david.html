@@ -1,52 +1,53 @@
-{% set title = 'David' %}
-{% set bio = data.family[title] %}
-{% extends 'default.html' %}
+---
+title: David
+layout: default
+---
 
-{% block body %}
+<h1>
+  {{page.title}}
+</h1>
 
-  <h1>
-    {{ title }}
-  </h1>
+<p>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pellentesque
+  condimentum erat, et mattis turpis interdum quis. Nunc dignissim eleifend
+  nibh, eu hendrerit justo tincidunt quis. Proin magna mi, hendrerit eu
+  pellentesque eget, posuere ac nulla. Fusce id felis non sapien pellentesque
+  vehicula vel in mi.
+</p>
 
-  <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pellentesque
-    condimentum erat, et mattis turpis interdum quis. Nunc dignissim eleifend
-    nibh, eu hendrerit justo tincidunt quis. Proin magna mi, hendrerit eu
-    pellentesque eget, posuere ac nulla. Fusce id felis non sapien pellentesque
-    vehicula vel in mi.
-  </p>
+{{#data.family[0]}}
+<dl>
+  <dt>
+    Age
+  </dt>
+  <dd>
+    {{age}}
+  </dd>
+  <dt>
+    Occupation
+  </dt>
+  <dd>
+    {{occupation}}
+  </dd>
+  <dt>
+    Residence
+  </dt>
+  <dd>
+    {{residence}}
+  </dd>
+</dl>
+{{/data.family[0]}}
 
-  <dl>
-    <dt>
-      Age
-    </dt>
-    <dd>
-      {{ bio.age }}
-    </dd>
-    <dt>
-      Occupation
-    </dt>
-    <dd>
-      {{ bio.occupation }}
-    </dd>
-    <dt>
-      Residence
-    </dt>
-    <dd>
-      {{ bio.residence }}
-    </dd>
-  </dl>
+<hr>
 
-  <hr>
+<h2>
+  Other family members
+</h2>
 
-  <h2>
-    Other family members
-  </h2>
-
-  {% for person, bio in data.family %}
+<ul>
+  {{#data.family.members}}
     <li>
-      <a href="{{ person|lower }}.html">{{ person }}</a>
+      <a href="{{{data.family.url}}}">{{name}}</a>
     </li>
-  {% endfor %}
-
-{% endblock %}
+  {{/data.family.members}}
+</ul>

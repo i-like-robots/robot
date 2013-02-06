@@ -1,33 +1,31 @@
-{% set title = 'Welcome' %}
-{% extends 'default.html' %}
+---
+title: Welcome
+layout: default
+---
 
-{% block body %}
+<h1>
+  {{page.title}}
+</h1>
 
-  <h1>
-    {{ title }}
-  </h1>
+<p>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pellentesque
+  condimentum erat, et mattis turpis interdum quis. Nunc dignissim eleifend
+  nibh, eu hendrerit justo tincidunt quis. Proin magna mi, hendrerit eu
+  pellentesque eget, posuere ac nulla. Fusce id felis non sapien pellentesque
+  vehicula vel in mi. Aliquam ornare urna eget lacus ornare ornare. Integer
+  venenatis vehicula purus, at tristique tellus iaculis sit amet. Aliquam
+  dapibus nulla quis diam placerat fermentum lobortis libero consequat. Donec
+  sagittis vehicula metus ut dignissim.
+</p>
 
-  <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pellentesque
-    condimentum erat, et mattis turpis interdum quis. Nunc dignissim eleifend
-    nibh, eu hendrerit justo tincidunt quis. Proin magna mi, hendrerit eu
-    pellentesque eget, posuere ac nulla. Fusce id felis non sapien pellentesque
-    vehicula vel in mi. Aliquam ornare urna eget lacus ornare ornare. Integer
-    venenatis vehicula purus, at tristique tellus iaculis sit amet. Aliquam
-    dapibus nulla quis diam placerat fermentum lobortis libero consequat. Donec
-    sagittis vehicula metus ut dignissim.
-  </p>
-
-  <p>
-    Cras feugiat augue ut lectus adipiscing a egestas magna elementum. Ut eu
-    lectus vitae est consectetur tincidunt eu vestibulum leo. Praesent lacinia
-    condimentum eros eu ultricies. Pellentesque nibh lorem, fringilla ut
-    convallis ac, viverra ut nulla. Cras bibendum massa vel leo bibendum
-    facilisis. Integer tellus enim, congue id eleifend non, suscipit eu neque.
-    Quisque lacinia est sit amet ante mollis ut fermentum erat pretium. Donec
-    consectetur sapien pretium orci elementum at placerat libero pellentesque.
-    Nulla facilisi. Vestibulum in turpis mi. Pellentesque mollis lorem justo,
-    sit amet lobortis tellus.
-  </p>
-
-{% endblock %}
+<p>
+  Cras feugiat augue ut lectus adipiscing a egestas magna elementum. Ut eu
+  lectus vitae est consectetur tincidunt eu vestibulum leo. Praesent lacinia
+  condimentum eros eu ultricies. Pellentesque nibh lorem, fringilla ut
+  convallis ac, viverra ut nulla. Cras bibendum massa vel leo bibendum
+  facilisis. Integer tellus enim, congue id eleifend non, suscipit eu neque.
+  Quisque lacinia est sit amet ante mollis ut fermentum erat pretium. Donec
+  consectetur sapien pretium orci elementum at placerat libero pellentesque.
+  Nulla facilisi. Vestibulum in turpis mi. Pellentesque mollis lorem justo,
+  sit amet lobortis tellus.
+</p>

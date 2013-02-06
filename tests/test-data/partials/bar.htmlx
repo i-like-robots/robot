@@ -1,0 +1,7 @@
+<header id="site-header">
+  <a href="/" rel="logo">{{ data.site.title }}</a>
+  <nav role="navigation">
+    <a href="/">Home</a>
+    <a href="/about.html">About</a>
+  </nav>
+</header>

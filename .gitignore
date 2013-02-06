@@ -1,4 +1,5 @@
 node_modules/
+skeleton/output/
 tests/temp/
 
 .c9revisions

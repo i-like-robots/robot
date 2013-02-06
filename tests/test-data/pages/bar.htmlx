@@ -1,10 +1,10 @@
 ---
-title: About
-layout: default
+title: Foo bar
+layout: default.html
 ---
 
 <h1>
-  {{page.title}}
+  {{ page.title }}
 </h1>
 
 <p>
@@ -14,19 +14,3 @@ layout: default
   pellentesque eget, posuere ac nulla. Fusce id felis non sapien pellentesque
   vehicula vel in mi.
 </p>
-
-<a href="about/history.html">History</a>
-
-<hr>
-
-<h2>
-  Family members
-</h2>
-
-<ul>
-  {{#data.family.members}}
-    <li>
-      <a href="{{{data.family.url}}}">{{name}}</a>
-    </li>
-  {{/data.family.members}}
-</ul>
