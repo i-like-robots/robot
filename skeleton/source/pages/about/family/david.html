@@ -15,7 +15,7 @@ layout: default
   vehicula vel in mi.
 </p>
 
-{{#data.family[0]}}
+{{#with data.family.members.[0]}}
 <dl>
   <dt>
     Age
@@ -36,7 +36,7 @@ layout: default
     {{residence}}
   </dd>
 </dl>
-{{/data.family[0]}}
+{{/with}}
 
 <hr>
 

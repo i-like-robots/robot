@@ -1,6 +1,6 @@
 {
     "name": "robot",
-    "description": "A feature limited, Mustache-powered static HTML generator for prototyping or very simple websites. Similar to FireApp, Hammer or Mixture but with the speed and cross-platform compatibility of Node.js.",
+    "description": "A feature limited static HTML generator for prototyping or very simple websites. Similar to FireApp, Hammer or Mixture but with the speed and cross-platform compatibility of Node.js.",
     "version": "0.1.0",
     "keywords": [
         "flat",
@@ -21,7 +21,7 @@
         "url": "http://maketea.co.uk"
     },
     "dependencies": {
-        "mkdirp": "0.3.x",
+        "fs-extra": "0.6.x",
         "walkdir": "0.0.x",
         "js-yaml": "1.x",
         "handlebars": "1.0.x",
