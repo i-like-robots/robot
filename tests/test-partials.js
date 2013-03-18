@@ -3,15 +3,22 @@ var assert = require('assert');
 var handlebars = require('handlebars');
 var Partials = require('../lib/partials');
 
-var source = __dirname + '/test-data';
-var partialsPath = path.join(source, 'partials');
+//
+// Test data
+//
+var testData  = {};
+testData.mocks = path.join(__dirname, 'mocks/test-partials');
+testData.path = path.join(testData.mocks, 'partials');
 
+//
+// Test suite
+//
 suite('Partials', function() {
 
   var instance;
 
   setup(function() {
-    instance = new Partials(source);
+    instance = new Partials(testData.mocks);
   });
 
   teardown(function() {
@@ -19,26 +26,27 @@ suite('Partials', function() {
   });
 
   test('Constructor should calculate correct path', function() {
-    assert.equal(instance.partialsPath, partialsPath);
+    assert.equal(instance.partialsPath, testData.path);
   });
 
-  test('Should find foo.html', function(done) {
-    instance.scanDirectory(function() {
-      assert.ok(handlebars.partials.hasOwnProperty('foo'));
+  test('Should read partial.html', function(done) {
+    instance.readPartial(path.join(testData.path, 'partial.html'), 'partial', function() {
+      assert.ok(handlebars.partials.hasOwnProperty('partial'));
+      assert.ok(handlebars.partials['partial'].length);
       done();
     });
   });
 
-  test('Should ignore bar.htmlx', function(done) {
+  test('Should find partial.html', function(done) {
     instance.scanDirectory(function() {
-      assert.equal(handlebars.partials.hasOwnProperty('bar.htmlx'), false);
+      assert.ok(handlebars.partials.hasOwnProperty('partial'));
       done();
     });
   });
 
-  test('Should read foo.html', function(done) {
-    instance.readPartial(partialsPath + '/foo.html', 'foo', function() {
-      assert.ok(handlebars.partials.hasOwnProperty('foo'));
+  test('Should ignore none .html', function(done) {
+    instance.scanDirectory(function() {
+      assert.equal(handlebars.partials.hasOwnProperty('ignore-partial'), false);
       done();
     });
   });

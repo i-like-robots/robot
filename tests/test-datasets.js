@@ -2,15 +2,22 @@ var path = require('path');
 var assert = require('assert');
 var Datasets = require('../lib/datasets');
 
-var source = __dirname + '/test-data';
-var dataPath = path.join(source, 'data');
+//
+// Test data
+//
+var testData  = {};
+testData.mocks = path.join(__dirname, 'mocks/test-datasets');
+testData.path = path.join(testData.mocks, 'data');
 
+//
+// Test suite
+//
 suite('Dataset', function() {
 
   var instance;
 
   setup(function() {
-    instance = new Datasets(source);
+    instance = new Datasets(testData.mocks);
   });
 
   teardown(function() {
@@ -18,34 +25,53 @@ suite('Dataset', function() {
   });
 
   test('Constructor should calculate correct path', function() {
-    assert.equal(instance.datasetsPath, dataPath);
+    assert.equal(instance.datasetsPath, testData.path);
   });
 
-  test('Should find foo.json', function(done) {
+  test('Should read json-data.json', function() {
+    instance.addDocument(path.join(testData.path, 'json-data.json'), 'json-data');
+    assert.ok(instance.datasets.hasOwnProperty('json-data'));
+    assert.ok(instance.datasets['json-data']['data']);
+  });
+
+  test('Should find json-data.json', function(done) {
     instance.scanDirectory(function() {
-      assert.equal(!!instance.datasets['foo'], true);
+      assert.ok(instance.datasets.hasOwnProperty('json-data'));
       done();
     });
   });
 
-  test('Should ignore bar.jsonx', function(done) {
+  test('Should read js-data.js file', function() {
+    instance.addDocument(path.join(testData.path, 'js-data.js'), 'js-data');
+    assert.ok(instance.datasets.hasOwnProperty('js-data'));
+    assert.ok(instance.datasets['js-data']['data']);
+  });
+
+  test('Should find js-data.js', function(done) {
     instance.scanDirectory(function() {
-      assert.equal(!!instance.datasets['bar'], false);
+      assert.ok(instance.datasets.hasOwnProperty('js-data'));
       done();
     });
   });
 
-  test('Should read and parse foo.json', function() {
-    instance.addDocument(dataPath + '/foo.json', 'foo');
-    assert.ok(instance.datasets.hasOwnProperty('foo'));
-    assert.equal(instance.datasets['foo'].foo, 'bar');
+  test('Should read yaml-data.yml file', function() {
+    instance.addDocument(path.join(testData.path, 'yaml-data.yml'), 'yaml-data');
+    assert.ok(instance.datasets.hasOwnProperty('yaml-data'));
+    assert.ok(instance.datasets['yaml-data']['data']);
   });
 
-  test('Should throw an error attempting to parse invalid JSON', function() {
-    assert.throws(function() {
-      instance.addDocument(dataPath + '/bar.jsonx', 'bar');
+  test('Should find yaml-data.yml', function(done) {
+    instance.scanDirectory(function() {
+      assert.ok(instance.datasets.hasOwnProperty('yaml-data'));
+      done();
     });
-    assert.equal(instance.datasets.hasOwnProperty('bar'), false);
+  });
+
+  test('Should ignore none js/json/yaml', function(done) {
+    instance.scanDirectory(function() {
+      assert.equal(instance.datasets.hasOwnProperty('ignore-data'), false);
+      done();
+    });
   });
 
 });
