@@ -1,19 +1,27 @@
 #!/usr/bin/env node
 
-var Robot = require('../');
+var path = require('path');
+var cli = require('../lib/cli');
 var optimist = require('optimist');
 
-var cmd = optimist
-  .usage('Usage: robot [path] -s [source] -o [output] [flags]')
-  .describe({
-    s: 'Source dir',
-    o: 'Output dir',
-    help: 'Display help',
-    verbose: 'Verbose output'
-  })
-  .alias('s', 'source')
-  .alias('o', 'output');
+var usage = [
+  '',
+  '  Usage: robot [command] [options]',
+  '',
+  '  Commands:',
+  '',
+  '    scratch <location> - Copy skeleton project',
+  '    compile <location> [options] - Render project',
+  '',
+  '  Compile options:',
+  '',
+  '    -s, --source   Source directory',
+  '    -o, --output   Output directory',
+  '    -h, --help     Show help',
+  '    -v, --verbose  Verbose output'
+].join('\n');
 
+var cmd = optimist.usage(usage).alias('s', 'source').alias('o', 'output').alias('h', 'help').alias('v', 'verbose');
 var opts = cmd.argv;
 
 if (opts.help) {
@@ -21,10 +29,12 @@ if (opts.help) {
   process.exit(1);
 }
 
-var path = process.cwd();
+var target = path.normalize(process.cwd() + '/' + (opts._.length === 2 ? opts._.pop() : ''));
+var command = opts._.length ? opts._.pop() : 'No command';
 
-if (opts._.length) {
-  path = path + '/' + opts._.pop()
+if (cli.hasOwnProperty(command)) {
+  cli[command](target, opts);
 }
-
-new Robot(path, opts).compile();
+else {
+  console.log('Command "' + command + '" not found');
+}
