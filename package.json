@@ -1,7 +1,7 @@
 {
     "name": "robot",
     "description": "A feature limited static HTML generator for prototyping or very simple websites. Similar to FireApp, Hammer or Mixture but with the speed and cross-platform compatibility of Node.js.",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "keywords": [
         "flat",
         "static",
@@ -21,7 +21,8 @@
         "url": "http://maketea.co.uk"
     },
     "dependencies": {
-        "fs-extra": "0.6.x",
+        "ncp": "0.4.x",
+        "mkdirp": "0.3.x",
         "walkdir": "0.0.x",
         "js-yaml": "1.x",
         "handlebars": "1.0.x",
