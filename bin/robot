@@ -6,22 +6,20 @@ var optimist = require('optimist');
 
 var usage = [
   '',
-  '  Usage: robot [command] [options]',
+  '  Usage: robot <path> [command] [options]',
   '',
   '  Commands:',
   '',
-  '    scratch <location> - Copy skeleton project',
-  '    compile <location> [options] - Render project',
+  '    scratch <path> - Copies a project skeleton',
+  '    compile <path> [options] - Renders the project and saves to disk',
   '',
   '  Compile options:',
   '',
   '    -s, --source   Source directory',
-  '    -o, --output   Output directory',
-  '    -h, --help     Show help',
-  '    -v, --verbose  Verbose output'
+  '    -o, --output   Output directory'
 ].join('\n');
 
-var cmd = optimist.usage(usage).alias('s', 'source').alias('o', 'output').alias('h', 'help').alias('v', 'verbose');
+var cmd = optimist.usage(usage).alias('s', 'source').alias('o', 'output').alias('h', 'help');
 var opts = cmd.argv;
 
 if (opts.help) {

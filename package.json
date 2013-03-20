@@ -1,7 +1,7 @@
 {
     "name": "robot",
-    "description": "A feature limited static HTML generator for prototyping or very simple websites. Similar to FireApp, Hammer or Mixture but with the speed and cross-platform compatibility of Node.js.",
-    "version": "0.1.1",
+    "description": "A feature limited static HTML generator for rapid prototyping or simple websites. Similar to FireApp, Hammer or Mixture but with the speed and cross-platform compatibility of Node.js.",
+    "version": "0.1.2",
     "keywords": [
         "flat",
         "static",
