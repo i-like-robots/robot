@@ -35,6 +35,9 @@
     "bin": {
         "robot": "./bin/robot"
     },
+    "scripts": {
+        "test": "mocha tests -u tdd"
+    },
     "engines": {
         "node": ">=0.8.0"
     }
