@@ -36,7 +36,7 @@ suite('Partials', function() {
 
     test('Should ignore none .html', function(done) {
       instance.scanDirectory(testData.mocks, function() {
-        assert.equal(handlebars.partials.hasOwnProperty('ignore-partial'), false);
+        assert.equal(handlebars.partials.hasOwnProperty('ignore'), false);
         done();
       });
     });

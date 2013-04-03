@@ -36,7 +36,7 @@ suite('Layouts', function() {
 
     test('Should ignore none .html', function(done) {
       instance.scanDirectory(testData.mocks, function() {
-        assert.equal(instance.layouts.hasOwnProperty('ignore-layout'), false);
+        assert.equal(instance.layouts.hasOwnProperty('ignore'), false);
         done();
       });
     });
