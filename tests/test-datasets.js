@@ -1,6 +1,6 @@
 var path = require('path');
 var assert = require('assert');
-var Datasets = require('../lib/datasets');
+var datasets = require('../lib/datasets');
 
 //
 // Test data
@@ -17,15 +17,11 @@ suite('Dataset', function() {
   var instance;
 
   setup(function() {
-    instance = new Datasets(testData.mocks);
+    instance = datasets;
   });
 
   teardown(function() {
     instance = null;
-  });
-
-  test('Constructor should calculate correct path', function() {
-    assert.equal(instance.datasetsPath, testData.path);
   });
 
   test('Should read json-data.json', function() {
@@ -35,7 +31,7 @@ suite('Dataset', function() {
   });
 
   test('Should find json-data.json', function(done) {
-    instance.scanDirectory(function() {
+    instance.scanDirectory(testData.mocks, function() {
       assert.ok(instance.datasets.hasOwnProperty('json-data'));
       done();
     });
@@ -48,7 +44,7 @@ suite('Dataset', function() {
   });
 
   test('Should find js-data.js', function(done) {
-    instance.scanDirectory(function() {
+    instance.scanDirectory(testData.mocks, function() {
       assert.ok(instance.datasets.hasOwnProperty('js-data'));
       done();
     });
@@ -61,14 +57,14 @@ suite('Dataset', function() {
   });
 
   test('Should find yaml-data.yml', function(done) {
-    instance.scanDirectory(function() {
+    instance.scanDirectory(testData.mocks, function() {
       assert.ok(instance.datasets.hasOwnProperty('yaml-data'));
       done();
     });
   });
 
   test('Should ignore none js/json/yaml', function(done) {
-    instance.scanDirectory(function() {
+    instance.scanDirectory(testData.mocks, function() {
       assert.equal(instance.datasets.hasOwnProperty('ignore-data'), false);
       done();
     });

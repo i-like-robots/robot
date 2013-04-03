@@ -1,7 +1,7 @@
 var path = require('path');
 var assert = require('assert');
 var handlebars = require('handlebars');
-var Pages = require('../lib/pages');
+var pages = require('../lib/pages');
 
 //
 // Test data
@@ -18,15 +18,11 @@ suite('Pages', function() {
   var instance;
 
   setup(function() {
-    instance = new Pages(testData.mocks);
+    instance = pages;
   });
 
   teardown(function() {
     instance = null;
-  });
-
-  test('Constructor should calculate correct path', function() {
-    assert.equal(instance.pagesPath, testData.path);
   });
 
   test('Should read page.html and parse frontmatter', function(done) {
@@ -39,14 +35,14 @@ suite('Pages', function() {
   });
 
   test('Should find page.html', function(done) {
-    instance.scanDirectory(function() {
+    instance.scanDirectory(testData.mocks, function() {
       assert.ok(instance.pages.hasOwnProperty('page.html'));
       done();
     });
   });
 
   test('Should ignore none .html', function(done) {
-    instance.scanDirectory(function() {
+    instance.scanDirectory(testData.mocks, function() {
       assert.equal(instance.pages.hasOwnProperty('ignore-page.not'), false);
       done();
     });

@@ -1,7 +1,7 @@
 var path = require('path');
 var assert = require('assert');
 var handlebars = require('handlebars');
-var Partials = require('../lib/partials');
+var partials = require('../lib/partials');
 
 //
 // Test data
@@ -18,15 +18,11 @@ suite('Partials', function() {
   var instance;
 
   setup(function() {
-    instance = new Partials(testData.mocks);
+    instance = partials;
   });
 
   teardown(function() {
     instance = null;
-  });
-
-  test('Constructor should calculate correct path', function() {
-    assert.equal(instance.partialsPath, testData.path);
   });
 
   test('Should read partial.html', function(done) {
@@ -38,14 +34,14 @@ suite('Partials', function() {
   });
 
   test('Should find partial.html', function(done) {
-    instance.scanDirectory(function() {
+    instance.scanDirectory(testData.mocks, function() {
       assert.ok(handlebars.partials.hasOwnProperty('partial'));
       done();
     });
   });
 
   test('Should ignore none .html', function(done) {
-    instance.scanDirectory(function() {
+    instance.scanDirectory(testData.mocks, function() {
       assert.equal(handlebars.partials.hasOwnProperty('ignore-partial'), false);
       done();
     });

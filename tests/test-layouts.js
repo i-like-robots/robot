@@ -1,7 +1,7 @@
 var path = require('path');
 var assert = require('assert');
 var handlebars = require('handlebars');
-var Layouts = require('../lib/layouts');
+var layouts = require('../lib/layouts');
 
 //
 // Test data
@@ -18,15 +18,11 @@ suite('Layouts', function() {
   var instance;
 
   setup(function() {
-    instance = new Layouts(testData.mocks);
+    instance = layouts;
   });
 
   teardown(function() {
     instance = null;
-  });
-
-  test('Constructor should calculate correct path', function() {
-    assert.equal(instance.layoutsPath, testData.path);
   });
 
   test('Should read layout.html', function(done) {
@@ -38,14 +34,14 @@ suite('Layouts', function() {
   });
 
   test('Should find layout.html', function(done) {
-    instance.scanDirectory(function() {
+    instance.scanDirectory(testData.mocks, function() {
       assert.ok(instance.layouts.hasOwnProperty('layout'));
       done();
     });
   });
 
   test('Should ignore none .html', function(done) {
-    instance.scanDirectory(function() {
+    instance.scanDirectory(testData.mocks, function() {
       assert.equal(instance.layouts.hasOwnProperty('ignore-layout'), false);
       done();
     });
