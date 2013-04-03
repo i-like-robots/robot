@@ -36,7 +36,7 @@ suite('Pages', function() {
 
     test('Should ignore none .html', function(done) {
       instance.scanDirectory(testData.mocks, function() {
-        assert.equal(instance.pages.hasOwnProperty('ignore-page.not'), false);
+        assert.equal(instance.pages.hasOwnProperty('ignore.not'), false);
         done();
       });
     });
@@ -45,16 +45,24 @@ suite('Pages', function() {
 
   suite('Read and parse', function() {
 
-    test('Should read page.html and parse frontmatter', function(done) {
-      instance.readPage(path.join(testData.path, '/page.html'), 'page.html', function() {
+    test('Should read page.html and parse YAML front matter', function(done) {
+      instance.readPage(path.join(testData.path, 'page.html'), 'page.html', function() {
         assert.ok(instance.pages.hasOwnProperty('page.html'));
-        assert.ok(instance.pages['page.html'].raw.length);
         assert.ok(instance.pages['page.html'].data.hasOwnProperty('title'));
         done();
       });
     });
 
-    // Test front matter error
+    test('Should return error if front matter not found', function() {
+      assert.ok(instance.parseFrontMatter('') instanceof Error);
+    });
+
+    test('Should return error if front matter is invalid YAML', function(done) {
+      instance.readPage(path.join(testData.path, 'invalid.html'), 'invalid.html', function(err) {
+        assert.ok(err instanceof Error);
+        done();
+      })
+    });
 
   });
 
