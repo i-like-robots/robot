@@ -25,26 +25,34 @@ suite('Layouts', function() {
     instance = null;
   });
 
-  test('Should read layout.html', function(done) {
-    instance.readLayout(path.join(testData.path, 'layout.html'), 'layout', function() {
-      assert.ok(instance.layouts.hasOwnProperty('layout'));
-      assert.ok(instance.layouts['layout'].raw.length);
-      done();
+  suite('Scan directory', function() {
+
+    test('Should find layout.html', function(done) {
+      instance.scanDirectory(testData.mocks, function() {
+        assert.ok(instance.layouts.hasOwnProperty('layout'));
+        done();
+      });
     });
+
+    test('Should ignore none .html', function(done) {
+      instance.scanDirectory(testData.mocks, function() {
+        assert.equal(instance.layouts.hasOwnProperty('ignore-layout'), false);
+        done();
+      });
+    });
+
   });
 
-  test('Should find layout.html', function(done) {
-    instance.scanDirectory(testData.mocks, function() {
-      assert.ok(instance.layouts.hasOwnProperty('layout'));
-      done();
-    });
-  });
+  suite('Read and parse', function() {
 
-  test('Should ignore none .html', function(done) {
-    instance.scanDirectory(testData.mocks, function() {
-      assert.equal(instance.layouts.hasOwnProperty('ignore-layout'), false);
-      done();
+    test('Should read layout.html', function(done) {
+      instance.readLayout(path.join(testData.path, 'layout.html'), 'layout', function() {
+        assert.ok(instance.layouts.hasOwnProperty('layout'));
+        assert.ok(instance.layouts['layout'].raw.length);
+        done();
+      });
     });
+
   });
 
 });

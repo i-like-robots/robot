@@ -25,26 +25,34 @@ suite('Partials', function() {
     instance = null;
   });
 
-  test('Should read partial.html', function(done) {
-    instance.readPartial(path.join(testData.path, 'partial.html'), 'partial', function() {
-      assert.ok(handlebars.partials.hasOwnProperty('partial'));
-      assert.ok(handlebars.partials['partial'].length);
-      done();
+  suite('Scan directory', function() {
+
+    test('Should find partial.html', function(done) {
+      instance.scanDirectory(testData.mocks, function() {
+        assert.ok(handlebars.partials.hasOwnProperty('partial'));
+        done();
+      });
     });
+
+    test('Should ignore none .html', function(done) {
+      instance.scanDirectory(testData.mocks, function() {
+        assert.equal(handlebars.partials.hasOwnProperty('ignore-partial'), false);
+        done();
+      });
+    });
+
   });
 
-  test('Should find partial.html', function(done) {
-    instance.scanDirectory(testData.mocks, function() {
-      assert.ok(handlebars.partials.hasOwnProperty('partial'));
-      done();
-    });
-  });
+  suite('Read and parse', function() {
 
-  test('Should ignore none .html', function(done) {
-    instance.scanDirectory(testData.mocks, function() {
-      assert.equal(handlebars.partials.hasOwnProperty('ignore-partial'), false);
-      done();
+    test('Should read partial.html', function(done) {
+      instance.readPartial(path.join(testData.path, 'partial.html'), 'partial', function() {
+        assert.ok(handlebars.partials.hasOwnProperty('partial'));
+        assert.ok(handlebars.partials['partial'].length);
+        done();
+      });
     });
+
   });
 
 });

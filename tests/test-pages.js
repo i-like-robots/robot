@@ -25,27 +25,37 @@ suite('Pages', function() {
     instance = null;
   });
 
-  test('Should read page.html and parse frontmatter', function(done) {
-    instance.readPage(path.join(testData.path, '/page.html'), 'page.html', function() {
-      assert.ok(instance.pages.hasOwnProperty('page.html'));
-      assert.ok(instance.pages['page.html'].raw.length);
-      assert.ok(instance.pages['page.html'].data.hasOwnProperty('title'));
-      done();
+  suite('Scan directory', function() {
+
+    test('Should find page.html', function(done) {
+      instance.scanDirectory(testData.mocks, function() {
+        assert.ok(instance.pages.hasOwnProperty('page.html'));
+        done();
+      });
     });
+
+    test('Should ignore none .html', function(done) {
+      instance.scanDirectory(testData.mocks, function() {
+        assert.equal(instance.pages.hasOwnProperty('ignore-page.not'), false);
+        done();
+      });
+    });
+
   });
 
-  test('Should find page.html', function(done) {
-    instance.scanDirectory(testData.mocks, function() {
-      assert.ok(instance.pages.hasOwnProperty('page.html'));
-      done();
-    });
-  });
+  suite('Read and parse', function() {
 
-  test('Should ignore none .html', function(done) {
-    instance.scanDirectory(testData.mocks, function() {
-      assert.equal(instance.pages.hasOwnProperty('ignore-page.not'), false);
-      done();
+    test('Should read page.html and parse frontmatter', function(done) {
+      instance.readPage(path.join(testData.path, '/page.html'), 'page.html', function() {
+        assert.ok(instance.pages.hasOwnProperty('page.html'));
+        assert.ok(instance.pages['page.html'].raw.length);
+        assert.ok(instance.pages['page.html'].data.hasOwnProperty('title'));
+        done();
+      });
     });
+
+    // Test front matter error
+
   });
 
 });
