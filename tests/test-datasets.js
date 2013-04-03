@@ -35,9 +35,10 @@ suite('Dataset', function() {
       });
     });
 
-    test('Should ignore none js/json/yaml', function(done) {
+    test('Should ignore none js/json/yaml and invalid data', function(done) {
       instance.scanDirectory(testData.mocks, function() {
-        assert.equal(instance.datasets.hasOwnProperty('ignore-data'), false);
+        assert.equal(instance.datasets.hasOwnProperty('ignore'), false);
+        assert.equal(instance.datasets.hasOwnProperty('invalid'), false);
         done();
       });
     });

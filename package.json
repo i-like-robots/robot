@@ -22,6 +22,7 @@
     },
     "dependencies": {
         "ncp": "0.4.x",
+        "async": "0.2.x",
         "mkdirp": "0.3.x",
         "walkdir": "0.0.x",
         "js-yaml": "1.x",
