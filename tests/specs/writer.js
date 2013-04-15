@@ -8,7 +8,7 @@ describe('Writer', function() {
 
     it('Should return a Handlebars template instance', function() {
       var output = instance.prepareTemplate('{{foo}}');
-      assert.equals(typeof output, 'function');
+      assert.equal(typeof output, 'function');
     });
 
   });
@@ -17,8 +17,10 @@ describe('Writer', function() {
 
     it('Should return a compiled string when given a template and data', function() {
       var input = 'bar';
-      var output = instance.compileTemplate('{{foo}}', { foo: input });
-      assert.equals(output, input);
+      var template = '{{foo}}';
+      var compiled = instance.prepareTemplate(template);
+      assert.equal(instance.compileTemplate(template, { foo: input }), input);
+      assert.equal(instance.compileTemplate(compiled, { foo: input }), input);
     });
 
   });
@@ -29,9 +31,9 @@ describe('Writer', function() {
     var output = '../temp/test.html';
 
     it('Should write a file with contents to disk', function(done) {
-      instance.writeFile('', output, function(err) {
-        assert.equals(err, null);
-        assert.equals(fs.readFileSync(output), input);
+      instance.writeToDisk(output, input, function(err) {
+        assert.equal(err, null);
+        assert.equal(fs.readFileSync(output), input);
         done();
       });
     })
