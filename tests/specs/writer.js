@@ -24,8 +24,9 @@ describe('Writer', function() {
   });
 
   describe('Write file to disk', function() {
+
     var input = 'foo';
-    var output = 'temp/test.html';
+    var output = '../temp/test.html';
 
     it('Should write a file with contents to disk', function(done) {
       instance.writeFile('', output, function(err) {
