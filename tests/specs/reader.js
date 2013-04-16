@@ -1,13 +1,17 @@
+var path = require('path');
 var assert = require('assert');
 var instance = require('../../lib/reader.js');
 
 describe('Reader', function() {
 
+  var mocks = path.join(__dirname, '../mocks/data/');
+
   describe('Scan directory', function() {
 
     it('Should return an array of files from directory', function(done) {
-      instance.scanDirectory('../mocks/test-layouts/layouts', function(err, files) {
-        assert.ok(files.length);
+      instance.scanDirectory(mocks, function(err, files) {
+        assert.equal(err, null);
+        assert.equal(isNaN(files.length), false);
         done();
       });
     });
@@ -41,7 +45,7 @@ describe('Reader', function() {
 
     it('Should read each file and send data via callback', function(done) {
       var i = 0;
-      var files = ['../mocks/test-partials/partials/partial.html', '../mocks/test-layouts/layouts/layout.html'];
+      var files = [mocks + '/test-json.json', mocks + '/test-js.js'];
 
       instance.readFiles(
         files,
@@ -50,6 +54,7 @@ describe('Reader', function() {
           assert.ok(data.length);
         },
         function(err) {
+          assert.equal(err, null);
           assert.equal(i, files.length);
           done();
         }

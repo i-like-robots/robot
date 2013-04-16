@@ -1,4 +1,5 @@
 var fs = require('fs');
+var path = require('path');
 var assert = require('assert');
 var instance = require('../../lib/writer.js');
 
@@ -28,7 +29,7 @@ describe('Writer', function() {
   describe('Write file to disk', function() {
 
     var input = 'foo';
-    var output = '../temp/test.html';
+    var output = path.join(__dirname, '../temp/test.html');
 
     it('Should write a file with contents to disk', function(done) {
       instance.writeToDisk(output, input, function(err) {
