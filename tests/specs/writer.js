@@ -1,7 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 var assert = require('assert');
-var instance = require('../../lib/writer.js');
+var instance = require('../../lib/robot/writer.js');
 
 describe('Writer', function() {
 

@@ -1,6 +1,6 @@
 var path = require('path');
 var assert = require('assert');
-var instance = require('../../lib/reader.js');
+var instance = require('../../lib/robot/reader.js');
 
 describe('Reader', function() {
 
