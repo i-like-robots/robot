@@ -1,5 +1,7 @@
+var fs = require('fs');
 var path = require('path');
 var assert = require('assert');
+var handlebars = require('handlebars');
 var instance = require('../../lib/robot/resources.js');
 
 describe('Resources', function() {
@@ -20,10 +22,11 @@ describe('Resources', function() {
       it('Should find .json, .yaml and .js files but ignore others', function(done) {
         instance.scanData(mocks, function(err, data) {
           assert.equal(err, null);
+          assert.equal(data.length, 3);
           assert.ok(data.indexOf(files.js) > -1);
-          assert.ok(data.indexOf(files.xml) == -1);
           assert.ok(data.indexOf(files.yaml) > -1);
           assert.ok(data.indexOf(files.json) > -1);
+          assert.ok(data.indexOf(files.xml) == -1);
 
           done();
         });
@@ -99,25 +102,54 @@ describe('Resources', function() {
 
   });
 
-//  describe('Partials', function() {
-//
-//    describe('Load partials', function(done) {
-//
-//      it ('Should find .html files but ignore others', function(done) {
-//        instance.loadPartials(mocks, function(err) {
-//
-//        });
-//
-//
-//      });
-//
+  describe('Partials', function() {
+
+    var files = {
+      html: path.join(mocks, 'partials/partial.html'),
+      xml: path.join(mocks, 'partials/ignore.xml')
+    };
+
+    describe('Scan partials', function() {
+
+      it ('Should find .html files but ignore others', function(done) {
+        instance.scanPartials(mocks, function(err, data) {
+          assert.equal(err, null);
+          assert.equal(data.length, 1);
+          assert.ok(data.indexOf(files.html) > -1);
+          assert.ok(data.indexOf(files.xml) == -1);
+          done();
+        });
+      });
+
+    });
+
+//    describe('Load partials', function() {
 //    });
-//
-//    describe('Add partial', function(done) {
-//
-//    });
-//
-//  });
+
+
+    describe('Add partial', function() {
+      it('Should read partial and register with Handlebars', function(done) {
+
+        var contents = fs.readFileSync(files.html, 'utf-8');
+
+        instance.addPartial(files.html, function(err) {
+          assert.equal(err, null);
+          assert.equal(handlebars.partials.hasOwnProperty('partial'), true);
+          assert.equal(handlebars.partials['partial'], contents);
+
+          done();
+        });
+      });
+
+      it('Should return an error attempting to load invalid file', function(done) {
+        instance.addPartial('', function(err) {
+          assert.ok(err instanceof Error);
+          done();
+        });
+      });
+    });
+
+  });
 
 //  describe('Layouts', function() {
 //
