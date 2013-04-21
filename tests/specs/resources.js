@@ -8,16 +8,51 @@ describe('Resources', function() {
 
   describe('Data', function() {
 
+    var files = {
+      js: path.join(mocks, 'data/test-js.js'),
+      xml: path.join(mocks, 'data/ignore-xml.xml'),
+      yaml: path.join(mocks, 'data/test-yaml.yml'),
+      json: path.join(mocks, 'data/test-json.json')
+    };
+
+    describe('Scan data', function() {
+
+      it('Should find .json, .yaml and .js files but ignore others', function(done) {
+        instance.scanData(mocks, function(err, data) {
+          assert.equal(err, null);
+          assert.ok(data.indexOf(files.js) > -1);
+          assert.ok(data.indexOf(files.xml) == -1);
+          assert.ok(data.indexOf(files.yaml) > -1);
+          assert.ok(data.indexOf(files.json) > -1);
+
+          done();
+        });
+      });
+
+    });
+
     describe('Load data', function() {
 
-      it('Should find .json, .yaml and .js data', function(done) {
-        instance.loadData(mocks, function(err) {
+      var load = [files.js, files.yaml, files.json];
+
+      it('Should load and parse .json, .yaml and .js files', function(done) {
+        instance.loadData(load, function(err) {
           var data = instance.getData();
 
           assert.equal(err, null);
           assert.equal(data.hasOwnProperty('test-js'), true);
           assert.equal(data.hasOwnProperty('test-json'), true);
           assert.equal(data.hasOwnProperty('test-yaml'), true);
+
+          done();
+        });
+      });
+
+      it('Should return error attempting to load invalid file', function(done) {
+        instance.loadData([files.xml, files.js], function(err) {
+          var data = instance.getData();
+
+          assert.ok(err instanceof Error);
           assert.equal(data.hasOwnProperty('ignore-xml'), false);
 
           done();
@@ -29,7 +64,7 @@ describe('Resources', function() {
     describe('Add data', function() {
 
       it('Should read JSON file', function() {
-        var err = instance.addData(mocks + 'data/test-json.json');
+        var err = instance.addData(files.json);
         var data = instance.getData();
 
         assert.equal(err, null);
@@ -38,7 +73,7 @@ describe('Resources', function() {
       });
 
       it('Should read YAML file', function() {
-        var err = instance.addData(mocks + 'data/test-yaml.yml');
+        var err = instance.addData(files.yaml);
         var data = instance.getData();
 
         assert.equal(err, null);
@@ -47,7 +82,7 @@ describe('Resources', function() {
       });
 
       it('Should read JavaScript file', function() {
-        var err = instance.addData(mocks + 'data/test-js.js');
+        var err = instance.addData(files.js);
         var data = instance.getData();
 
         assert.equal(err, null);
@@ -56,7 +91,7 @@ describe('Resources', function() {
       });
 
       it('Should return error reading invalid file', function() {
-        var err = instance.addData(mocks + 'data/ignore-xml.xml');
+        var err = instance.addData(files.xml);
         assert.ok(err instanceof Error);
       });
 
@@ -68,10 +103,22 @@ describe('Resources', function() {
 //
 //    describe('Load partials', function(done) {
 //
+//      it ('Should find .html files but ignore others', function(done) {
+//        instance.loadPartials(mocks, function(err) {
+//
+//        });
+//
+//
+//      });
+//
+//    });
+//
+//    describe('Add partial', function(done) {
+//
 //    });
 //
 //  });
-//
+
 //  describe('Layouts', function() {
 //
 //    describe('Load partials', function(done) {
