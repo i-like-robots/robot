@@ -31,6 +31,10 @@ describe('Writer', function() {
     var input = 'foo';
     var output = path.join(__dirname, '../temp/test.html');
 
+    after(function() {
+      fs.unlinkSync(output);
+    });
+
     it('Should write a file with contents to disk', function(done) {
       instance.writeToDisk(output, input, function(err) {
         assert.equal(err, null);
