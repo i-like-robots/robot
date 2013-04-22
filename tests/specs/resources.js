@@ -18,7 +18,6 @@ describe('Resources', function() {
     };
 
     describe('Scan data', function() {
-
       it('Should find .json, .yaml and .js files but ignore others', function(done) {
         instance.scanData(mocks, function(err, data) {
           assert.equal(err, null);
@@ -30,7 +29,6 @@ describe('Resources', function() {
           done();
         });
       });
-
     });
 
     describe('Load data', function() {
@@ -66,35 +64,35 @@ describe('Resources', function() {
     describe('Add data', function() {
 
       it('Should read JavaScript file', function() {
-        var err = instance.addData(files.js);
+        var result = instance.addData(files.js);
         var data = instance.getData();
 
-        assert.equal(err, null);
+        assert.equal(result, null);
         assert.ok(data.hasOwnProperty('foo'));
         assert.ok(data.foo.data);
       });
 
       it('Should read JSON file', function() {
-        var err = instance.addData(files.json);
+        var result = instance.addData(files.json);
         var data = instance.getData();
 
-        assert.equal(err, null);
+        assert.equal(result, null);
         assert.ok(data.hasOwnProperty('bar'));
         assert.ok(data.bar.data);
       });
 
       it('Should read YAML file', function() {
-        var err = instance.addData(files.yaml);
+        var result = instance.addData(files.yaml);
         var data = instance.getData();
 
-        assert.equal(err, null);
+        assert.equal(result, null);
         assert.ok(data.hasOwnProperty('baz'));
         assert.ok(data.baz.data);
       });
 
       it('Should return error reading invalid file', function() {
-        var err = instance.addData(files.ignore);
-        assert.ok(err instanceof Error);
+        var result = instance.addData(files.ignore);
+        assert.ok(result instanceof Error);
       });
 
     });
@@ -109,7 +107,6 @@ describe('Resources', function() {
     };
 
     describe('Scan partials', function() {
-
       it ('Should find .html files but ignore others', function(done) {
         instance.scanPartials(mocks, function(err, data) {
           assert.equal(err, null);
@@ -118,11 +115,9 @@ describe('Resources', function() {
           done();
         });
       });
-
     });
 
     describe('Load partials', function() {
-
       it('Should run reader.readFiles() and call addPartial()', function(done) {
         instance.loadPartials([files.html], function(err) {
           assert.equal(err, null);
@@ -130,7 +125,6 @@ describe('Resources', function() {
           done();
         });
       });
-
     });
 
     describe('Add partial', function() {
@@ -152,8 +146,8 @@ describe('Resources', function() {
       ignore: path.join(mocks, 'layouts/ignore.xml')
     };
 
-    describe('Scan layouts', function(done) {
-      it ('Should find .html files but ignore others', function(done) {
+    describe('Scan layouts', function() {
+      it('Should find .html files but ignore others', function(done) {
         instance.scanLayouts(mocks, function(err, data) {
           assert.equal(err, null);
           assert.ok(data.indexOf(files.html) > -1);
@@ -164,7 +158,6 @@ describe('Resources', function() {
     });
 
     describe('Load layouts', function() {
-
       it('Should run reader.readFiles() and call addLayout()', function(done) {
         instance.loadLayouts([files.html], function(err) {
           var data = instance.getLayouts();
@@ -175,28 +168,79 @@ describe('Resources', function() {
           done();
         });
       });
-
     });
 
     describe('Add layout', function() {
       it('Should pre-compile to template instance', function() {
         var contents = fs.readFileSync(files.html, 'utf-8');
+        var result = instance.addLayout(files.html, contents);
         var data = instance.getLayouts();
 
-        instance.addLayout(files.html, contents);
+        assert.equal(result, null);
         assert.equal(data.hasOwnProperty('foo'), true);
+        assert.equal(data.foo.raw, contents);
         assert.equal(typeof data.foo.template, 'function');
       });
     });
 
   });
 
-//  describe('Pages', function() {
-//
-//    describe('Load pages', function(done) {
-//
-//    });
-//
-//  });
+  describe('Pages', function() {
+
+    var files = {
+      html: path.join(mocks, 'pages/foo.html'),
+      ignore: path.join(mocks, 'pages/ignore.xml'),
+      invalid: path.join(mocks, 'pages/invalid.html')
+    };
+
+    describe('Scan pages', function() {
+      it('Should find .html files but ignore others', function(done) {
+        instance.scanPages(mocks, function(err, data) {
+          assert.equal(err, null);
+          assert.ok(data.indexOf(files.html) > -1);
+          assert.ok(data.indexOf(files.ignore) === -1);
+          done();
+        });
+      });
+    });
+
+    describe('Load pages', function() {
+      it('Should run reader.readFiles() and call addPage()', function(done) {
+        instance.loadPages([files.html], function(err) {
+          var data = instance.getPages();
+
+          assert.equal(err, null);
+          assert.equal(data.hasOwnProperty('foo.html'), true);
+
+          done();
+        });
+      });
+    });
+
+    describe('Add page', function() {
+
+      it('Should parse YAML front matter and pre-compile to template instance', function() {
+        var contents = fs.readFileSync(files.html, 'utf-8');
+        var result = instance.addPage(files.html, contents);
+        var data = instance.getPages();
+
+        assert.equal(result, null);
+        assert.equal(data.hasOwnProperty('foo.html'), true);
+        assert.equal(data['foo.html'].raw, contents);
+        assert.equal(typeof data['foo.html'].template, 'function');
+        assert.equal(data['foo.html'].data.hasOwnProperty('title'), true);
+      });
+
+      it('Should return error if front matter is invalid', function() {
+        var contents = fs.readFileSync(files.invalid, 'utf-8');
+        var result = instance.addPage(files.invalid, contents);
+        var data = instance.getPages();
+
+        assert.equal(data.hasOwnProperty('invalid.html'), false);
+        assert.ok(result instanceof Error);
+      });
+    });
+
+  });
 
 });
