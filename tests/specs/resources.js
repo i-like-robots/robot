@@ -116,36 +116,33 @@ describe('Resources', function() {
           assert.equal(err, null);
           assert.equal(data.length, 1);
           assert.ok(data.indexOf(files.html) > -1);
-          assert.ok(data.indexOf(files.xml) == -1);
+          assert.ok(data.indexOf(files.xml) === -1);
           done();
         });
       });
 
     });
 
-//    describe('Load partials', function() {
-//    });
+    describe('Load partials', function() {
+
+        it('Should use reader.js module to load files and register', function(done) {
+          instance.loadPartials([files.html], function(err) {
+            assert.equal(err, null);
+            assert.equal(handlebars.partials.hasOwnProperty('partial'), true);
+            done();
+          });
+        });
+
+    });
 
 
     describe('Add partial', function() {
-      it('Should read partial and register with Handlebars', function(done) {
-
+      it('Should register partial with Handlebars', function() {
         var contents = fs.readFileSync(files.html, 'utf-8');
 
-        instance.addPartial(files.html, function(err) {
-          assert.equal(err, null);
-          assert.equal(handlebars.partials.hasOwnProperty('partial'), true);
-          assert.equal(handlebars.partials['partial'], contents);
-
-          done();
-        });
-      });
-
-      it('Should return an error attempting to load invalid file', function(done) {
-        instance.addPartial('', function(err) {
-          assert.ok(err instanceof Error);
-          done();
-        });
+        instance.addPartial(files.html, contents);
+        assert.equal(handlebars.partials.hasOwnProperty('partial'), true);
+        assert.equal(handlebars.partials.partial, contents);
       });
     });
 
