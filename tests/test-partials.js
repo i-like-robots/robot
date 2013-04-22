@@ -27,7 +27,7 @@ suite('Partials', function() {
 
   suite('Scan directory', function() {
 
-    test('Should find partial.html', function(done) {
+    test('Should find foo.html', function(done) {
       instance.scanDirectory(testData.mocks, function() {
         assert.ok(handlebars.partials.hasOwnProperty('partial'));
         done();
@@ -45,8 +45,8 @@ suite('Partials', function() {
 
   suite('Read and parse', function() {
 
-    test('Should read partial.html', function(done) {
-      instance.readPartial(path.join(testData.path, 'partial.html'), 'partial', function() {
+    test('Should read foo.html', function(done) {
+      instance.readPartial(path.join(testData.path, 'foo.html'), 'partial', function() {
         assert.ok(handlebars.partials.hasOwnProperty('partial'));
         assert.ok(handlebars.partials['partial'].length);
         done();

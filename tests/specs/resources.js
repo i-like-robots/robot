@@ -11,10 +11,10 @@ describe('Resources', function() {
   describe('Data', function() {
 
     var files = {
-      js: path.join(mocks, 'data/test-js.js'),
-      xml: path.join(mocks, 'data/ignore-xml.xml'),
-      yaml: path.join(mocks, 'data/test-yaml.yml'),
-      json: path.join(mocks, 'data/test-json.json')
+      js: path.join(mocks, 'data/foo.js'),
+      json: path.join(mocks, 'data/bar.json'),
+      yaml: path.join(mocks, 'data/baz.yaml'),
+      ignore: path.join(mocks, 'data/ignore.xml')
     };
 
     describe('Scan data', function() {
@@ -22,11 +22,10 @@ describe('Resources', function() {
       it('Should find .json, .yaml and .js files but ignore others', function(done) {
         instance.scanData(mocks, function(err, data) {
           assert.equal(err, null);
-          assert.equal(data.length, 3);
           assert.ok(data.indexOf(files.js) > -1);
           assert.ok(data.indexOf(files.yaml) > -1);
           assert.ok(data.indexOf(files.json) > -1);
-          assert.ok(data.indexOf(files.xml) == -1);
+          assert.ok(data.indexOf(files.ignore) === -1);
 
           done();
         });
@@ -43,20 +42,20 @@ describe('Resources', function() {
           var data = instance.getData();
 
           assert.equal(err, null);
-          assert.equal(data.hasOwnProperty('test-js'), true);
-          assert.equal(data.hasOwnProperty('test-json'), true);
-          assert.equal(data.hasOwnProperty('test-yaml'), true);
+          assert.equal(data.hasOwnProperty('foo'), true);
+          assert.equal(data.hasOwnProperty('bar'), true);
+          assert.equal(data.hasOwnProperty('baz'), true);
 
           done();
         });
       });
 
       it('Should return error attempting to load invalid file', function(done) {
-        instance.loadData([files.xml, files.js], function(err) {
+        instance.loadData([files.ignore, files.js], function(err) {
           var data = instance.getData();
 
           assert.ok(err instanceof Error);
-          assert.equal(data.hasOwnProperty('ignore-xml'), false);
+          assert.equal(data.hasOwnProperty('ignore'), false);
 
           done();
         });
@@ -66,13 +65,22 @@ describe('Resources', function() {
 
     describe('Add data', function() {
 
+      it('Should read JavaScript file', function() {
+        var err = instance.addData(files.js);
+        var data = instance.getData();
+
+        assert.equal(err, null);
+        assert.ok(data.hasOwnProperty('foo'));
+        assert.ok(data.foo.data);
+      });
+
       it('Should read JSON file', function() {
         var err = instance.addData(files.json);
         var data = instance.getData();
 
         assert.equal(err, null);
-        assert.ok(data.hasOwnProperty('test-json'));
-        assert.ok(data['test-json']['data']);
+        assert.ok(data.hasOwnProperty('bar'));
+        assert.ok(data.bar.data);
       });
 
       it('Should read YAML file', function() {
@@ -80,21 +88,12 @@ describe('Resources', function() {
         var data = instance.getData();
 
         assert.equal(err, null);
-        assert.ok(data.hasOwnProperty('test-yaml'));
-        assert.ok(data['test-yaml']['data']);
-      });
-
-      it('Should read JavaScript file', function() {
-        var err = instance.addData(files.js);
-        var data = instance.getData();
-
-        assert.equal(err, null);
-        assert.ok(data.hasOwnProperty('test-json'));
-        assert.ok(data['test-json']['data']);
+        assert.ok(data.hasOwnProperty('baz'));
+        assert.ok(data.baz.data);
       });
 
       it('Should return error reading invalid file', function() {
-        var err = instance.addData(files.xml);
+        var err = instance.addData(files.ignore);
         assert.ok(err instanceof Error);
       });
 
@@ -105,8 +104,8 @@ describe('Resources', function() {
   describe('Partials', function() {
 
     var files = {
-      html: path.join(mocks, 'partials/partial.html'),
-      xml: path.join(mocks, 'partials/ignore.xml')
+      html: path.join(mocks, 'partials/foo.html'),
+      ignore: path.join(mocks, 'partials/ignore.xml')
     };
 
     describe('Scan partials', function() {
@@ -114,9 +113,8 @@ describe('Resources', function() {
       it ('Should find .html files but ignore others', function(done) {
         instance.scanPartials(mocks, function(err, data) {
           assert.equal(err, null);
-          assert.equal(data.length, 1);
           assert.ok(data.indexOf(files.html) > -1);
-          assert.ok(data.indexOf(files.xml) === -1);
+          assert.ok(data.indexOf(files.ignore) === -1);
           done();
         });
       });
@@ -125,37 +123,74 @@ describe('Resources', function() {
 
     describe('Load partials', function() {
 
-        it('Should use reader.js module to load files and register', function(done) {
-          instance.loadPartials([files.html], function(err) {
-            assert.equal(err, null);
-            assert.equal(handlebars.partials.hasOwnProperty('partial'), true);
-            done();
-          });
+      it('Should run reader.readFiles() and call addPartial()', function(done) {
+        instance.loadPartials([files.html], function(err) {
+          assert.equal(err, null);
+          assert.equal(handlebars.partials.hasOwnProperty('foo'), true);
+          done();
         });
+      });
 
     });
-
 
     describe('Add partial', function() {
       it('Should register partial with Handlebars', function() {
         var contents = fs.readFileSync(files.html, 'utf-8');
 
         instance.addPartial(files.html, contents);
-        assert.equal(handlebars.partials.hasOwnProperty('partial'), true);
-        assert.equal(handlebars.partials.partial, contents);
+        assert.equal(handlebars.partials.hasOwnProperty('foo'), true);
+        assert.equal(handlebars.partials.foo, contents);
       });
     });
 
   });
 
-//  describe('Layouts', function() {
-//
-//    describe('Load partials', function(done) {
-//
-//    });
-//
-//  });
-//
+  describe('Layouts', function() {
+
+    var files = {
+      html: path.join(mocks, 'layouts/foo.html'),
+      ignore: path.join(mocks, 'layouts/ignore.xml')
+    };
+
+    describe('Scan layouts', function(done) {
+      it ('Should find .html files but ignore others', function(done) {
+        instance.scanLayouts(mocks, function(err, data) {
+          assert.equal(err, null);
+          assert.ok(data.indexOf(files.html) > -1);
+          assert.ok(data.indexOf(files.ignore) === -1);
+          done();
+        });
+      });
+    });
+
+    describe('Load layouts', function() {
+
+      it('Should run reader.readFiles() and call addLayout()', function(done) {
+        instance.loadLayouts([files.html], function(err) {
+          var data = instance.getLayouts();
+
+          assert.equal(err, null);
+          assert.equal(data.hasOwnProperty('foo'), true);
+
+          done();
+        });
+      });
+
+    });
+
+    describe('Add layout', function() {
+      it('Should pre-compile to template instance', function() {
+        var contents = fs.readFileSync(files.html, 'utf-8');
+        var data = instance.getLayouts();
+
+        instance.addLayout(files.html, contents);
+        assert.equal(data.hasOwnProperty('foo'), true);
+        assert.equal(typeof data.foo.template, 'function');
+      });
+    });
+
+  });
+
 //  describe('Pages', function() {
 //
 //    describe('Load pages', function(done) {

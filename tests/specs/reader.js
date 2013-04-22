@@ -28,14 +28,14 @@ describe('Reader', function() {
   describe('Filter by file type', function() {
 
     it('Should return an array of the same size if all files match', function() {
-      var input = ['path/to/file.type'];
-      var output = instance.filterByFileType(input, ['.type']);
+      var input = ['path/to/file.foo', 'path/to/file.bar', 'path/to/file.baz'];
+      var output = instance.filterByFileType(input, ['.foo', '.bar', '.baz']);
       assert.equal(input.length, output.length);
     });
 
     it('Should return an empty array when no files match', function() {
-      var input = ['path/to/file'];
-      var output = instance.filterByFileType(input, ['.type']);
+      var input = ['path/to/file.foo', 'path/to/file.bar', 'path/to/file.baz'];
+      var output = instance.filterByFileType(input, ['.qux']);
       assert.equal(output.length, 0);
     });
 
@@ -45,7 +45,7 @@ describe('Reader', function() {
 
     it('Should read each file and send data via callback', function(done) {
       var i = 0;
-      var files = [mocks + '/test-json.json', mocks + '/test-js.js'];
+      var files = [mocks + '/bar.json', mocks + '/foo.js'];
 
       instance.readFiles(
         files,
