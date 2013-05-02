@@ -41,7 +41,7 @@ describe('Writer', function() {
         assert.equal(fs.readFileSync(output), input);
         done();
       });
-    })
+    });
 
   });
 

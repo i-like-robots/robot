@@ -109,11 +109,10 @@ describe('Resources', function() {
     describe('Load partials', function() {
       it('Should read an array of files and register each', function(done) {
         instance.loadPartials([files.html], function(err) {
-          var contents = fs.readFileSync(files.html, 'utf-8');
           var data = instance.getPartials();
           assert.equal(err, null);
           assert.equal(data.hasOwnProperty('foo'), true);
-          assert.equal(data.foo.raw, contents);
+          assert.equal(typeof data.foo, 'function');
           done();
         });
       });
@@ -125,7 +124,7 @@ describe('Resources', function() {
         var result = instance.addPartial(files.html, contents);
         var data = instance.getPartials();
         assert.equal(data.hasOwnProperty('foo'), true);
-        assert.equal(data.foo.raw, contents);
+        assert.equal(typeof data.foo, 'function');
       });
     });
 
@@ -152,11 +151,10 @@ describe('Resources', function() {
     describe('Load layouts', function() {
       it('Should read an array of files and register each', function(done) {
         instance.loadLayouts([files.html], function(err) {
-          var contents = fs.readFileSync(files.html, 'utf-8');
           var data = instance.getLayouts();
           assert.equal(err, null);
           assert.equal(data.hasOwnProperty('foo'), true);
-          assert.equal(data.foo.raw, contents);
+          assert.equal(typeof data.foo, 'function');
           done();
         });
       });
@@ -168,7 +166,7 @@ describe('Resources', function() {
         var result = instance.addLayout(files.html, contents);
         var data = instance.getLayouts();
         assert.equal(data.hasOwnProperty('foo'), true);
-        assert.equal(data.foo.raw, contents);
+        assert.equal(typeof data.foo, 'function');
       });
     });
 
@@ -196,11 +194,11 @@ describe('Resources', function() {
     describe('Load pages', function() {
       it('Should read and array of files and register each', function(done) {
         instance.loadPages([files.html], function(err) {
-          var contents = fs.readFileSync(files.html, 'utf-8');
           var data = instance.getPages();
           assert.equal(err, null);
           assert.equal(data.hasOwnProperty('foo.html'), true);
-          assert.equal(data['foo.html'].raw, contents);
+          assert.equal(typeof data['foo.html'].getData(), 'object');
+          assert.equal(typeof data['foo.html'].getTemplate(), 'function');
           done();
         });
       });
@@ -212,39 +210,10 @@ describe('Resources', function() {
         var result = instance.addPage(files.html, contents);
         var data = instance.getPages();
         assert.equal(data.hasOwnProperty('foo.html'), true);
-        assert.equal(data['foo.html'].raw, contents);
+        assert.equal(typeof data['foo.html'].getData(), 'object');
+        assert.equal(typeof data['foo.html'].getTemplate(), 'function');
       });
     });
-
-//    describe('Parse front matter', function() {
-//
-//      var files = {
-//        html: path.join(mocks, 'pages/foo.html'),
-//        ignore: path.join(mocks, 'pages/ignore.xml'),
-//        invalid: path.join(mocks, 'pages/invalid.html')
-//      };
-//
-//      it ('Should parse front matter', function() {
-//        var contents = fs.readFileSync(files.html, 'utf-8');
-//        var result = instance.parseFrontMatter(contents);
-//        assert.ok(result.data.hasOwnProperty('title'));
-//      });
-//
-//      it('Should return error if front matter not found', function() {
-//        var contents = '';
-//        var result = instance.parseFrontMatter(contents);
-//
-//        assert.ok(result instanceof Error);
-//      });
-//
-//      it('Should return error if front matter is invalid', function() {
-//        var contents = fs.readFileSync(files.invalid, 'utf-8');
-//        var result = instance.parseFrontMatter(contents);
-//
-//        assert.ok(result instanceof Error);
-//      });
-//
-//    });
 
   });
 

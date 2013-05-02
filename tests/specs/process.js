@@ -21,16 +21,17 @@ describe('Process', function() {
     });
   });
 
-//  describe('Write all pages', function() {
+//  describe('Write output', function() {
 //
-//    var output = path.join(__dirname, '../temp/');
+//    var output = path.join(__dirname, '../temp/foo.html');
+//    var data = require(path.join(mocks, 'process/writeOutput.js'));
 //
 //    after(function() {
-//      fs.unlinkSync(path.join(output, 'foo.html'));
+//      fs.unlinkSync(output);
 //    });
 //
-//    it('Should take process templates and write to file', function(done) {
-//      instance.writeOutput(function(err) {
+//    it('Should process pages and write to file', function(done) {
+//      instance.writeOutput(data, function(err) {
 //        assert.equal(err, null);
 //        assert.equal(fs.existsSync(output), true);
 //        done();
