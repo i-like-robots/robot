@@ -1,7 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 var assert = require('assert');
-var process = require('../../lib/robot/process.js');
+var processes = require('../../lib/robot/processes.js');
 
 describe('Process', function() {
 
@@ -9,12 +9,13 @@ describe('Process', function() {
 
   describe('Read resources', function() {
     it('Should scan and load all resources in series', function(done) {
-      process.readResources(mocks, function(err, resources) {
+      processes.readResources(mocks, function(err, resources) {
         assert.equal(err, null);
         assert.equal(resources.getData().hasOwnProperty('foo'), true);
         assert.equal(resources.getPartials().hasOwnProperty('foo'), true);
         assert.equal(resources.getLayouts().hasOwnProperty('foo'), true);
         assert.equal(resources.getPages().hasOwnProperty('foo.html'), true);
+
         done();
       });
     });

@@ -5,14 +5,15 @@ var Options = require('../../lib/robot/options.js');
 describe('Config', function() {
 
   var mocks = path.join(__dirname, '../mocks');
-  var config = require(path.join(mocks, 'options/robot.json'));
-  var options = new Options(mocks, config);
 
   describe('Set options', function() {
 
     it('Should calculate correct source and output paths', function() {
-      assert.equal(options.sourcePath, path.join(mocks, 'source/'));
-      assert.equal(options.outputPath, path.join(mocks, 'output/'));
+      var input = require(path.join(mocks, 'options/robot.json'));
+      var instance = new Options(mocks, input);
+
+      assert.equal(instance.sourcePath, path.join(mocks, 'source/'));
+      assert.equal(instance.outputPath, path.join(mocks, 'output/'));
     });
 
   });
