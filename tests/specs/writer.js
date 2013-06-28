@@ -39,7 +39,7 @@ describe('Writer', function() {
       writer.writeToDisk(output, input, function(err) {
 
         assert.equal(err, null);
-        assert.equal(fs.readFileSync(output), input);
+        assert.equal(fs.readFileSync(output, 'utf-8'), input);
 
         done();
       });

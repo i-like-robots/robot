@@ -3,7 +3,7 @@ var path = require('path');
 var assert = require('assert');
 var processes = require('../../lib/robot/processes.js');
 
-describe('Process', function() {
+describe('Processes', function() {
 
   var mocks = path.join(__dirname, '../mocks');
 
@@ -21,22 +21,28 @@ describe('Process', function() {
     });
   });
 
-//  describe('Write output', function() {
-//
-//    var output = path.join(__dirname, '../temp/foo.html');
-//    var data = require(path.join(mocks, 'process/writeOutput.js'));
-//
-//    after(function() {
-//      fs.unlinkSync(output);
-//    });
-//
-//    it('Should process pages and write to file', function(done) {
-//      instance.writeOutput(data, function(err) {
-//        assert.equal(err, null);
-//        assert.equal(fs.existsSync(output), true);
-//        done();
-//      });
-//    });
-//  });
+  describe('Write output', function() {
+
+    var target = path.join(__dirname, '../temp');
+    var output = path.join(__dirname, '../temp/bar.html');
+
+    after(function() {
+      fs.unlinkSync(output);
+    });
+
+    it('Should process pages and write to file', function(done) {
+      var resources = require(path.join(mocks, 'processes/resources.js'));
+
+      processes.writeOutput(target, resources, function(err) {
+        assert.equal(err, null);
+        assert.equal(fs.existsSync(output), true);
+        assert.equal(fs.readFileSync(output, 'utf-8'), resources.getPages()['bar.html'].getTemplate());
+
+        done();
+      });
+
+    });
+
+  });
 
 });
