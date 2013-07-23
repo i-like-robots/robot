@@ -5,6 +5,8 @@ var writer = require('../../lib/robot/writer.js');
 
 describe('Writer', function() {
 
+  var mocks = path.join(__dirname, '../mocks');
+
   describe('Prepare template', function() {
 
     it('Should return a Handlebars template instance', function() {
@@ -25,6 +27,20 @@ describe('Writer', function() {
     });
 
   });
+
+  describe('Compile page with layout', function() {
+
+    var inputPage = 'page content';
+    var inputLayout = '<layout>{{{content}}}</layout>';
+
+    it('Should return a compiled string', function() {
+      var result = writer.compilePageWithLayout(inputPage, inputLayout, {});
+
+      assert.equal(result, '<layout>page content</layout>');
+    });
+
+  });
+
 
   describe('Write file to disk', function() {
 
