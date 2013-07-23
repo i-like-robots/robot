@@ -1,6 +1,7 @@
-node_modules/
 skeleton/output/
+node_modules/
 tests/temp/
+coverage/
 
 .c9revisions
 .DS_Store
