@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 var path = require('path');
-var cli = require('../lib/cli');
 var optimist = require('optimist');
+var interface = require('../lib/interface');
 
 var usage = [
   '',
@@ -30,9 +30,9 @@ if (opts.help) {
 var target = path.normalize(process.cwd() + '/' + (opts._.length === 2 ? opts._.pop() : ''));
 var command = opts._.length ? opts._.pop() : 'No command';
 
-if (cli.hasOwnProperty(command)) {
-  cli[command](target, opts);
+if (interface.hasOwnProperty(command)) {
+  interface[command](target, opts);
 }
 else {
-  console.log('Command "' + command + '" not found');
+  console.log('Command "' + command + '" not found.');
 }
