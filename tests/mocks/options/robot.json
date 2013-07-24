@@ -1,4 +1,4 @@
 {
-  "source": "source/",
-  "output": "output/"
+  "source": "foo/",
+  "output": "bar/"
 }
