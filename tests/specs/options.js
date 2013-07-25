@@ -6,34 +6,30 @@ describe('Options', function() {
 
   var mocks = path.join(__dirname, '../mocks/options');
 
-  describe('Set options', function() {
-
-    it('Should calculate correct paths based on user given options', function() {
-      var instance = new Options(mocks, {
-        source: 'baz/',
-        output: 'qux/'
-      });
-
-      assert.equal(instance.sourcePath, path.join(mocks, 'baz/'));
-      assert.equal(instance.outputPath, path.join(mocks, 'qux/'));
+  it('Should return user options when provided', function() {
+    var instance = new Options(mocks, {
+      source: 'baz/',
+      output: 'qux/'
     });
 
-    it('Should calculate correct paths based on project options', function() {
-      var input = require(path.join(mocks, 'robot.json'));
-      var instance = new Options(mocks, {});
-
-      assert.equal(instance.sourcePath, path.join(mocks, input.source));
-      assert.equal(instance.outputPath, path.join(mocks, input.output));
-    });
-
+    assert.equal(instance.sourcePath, path.join(mocks, 'baz/'));
+    assert.equal(instance.outputPath, path.join(mocks, 'qux/'));
   });
 
-//  describe('Load project options', function() {
-//
-//    it('Should load the project options file', function() {
-//
-//    });
-//
-//  });
+  it('Should return options file values if no user options were given', function() {
+    var input = require(path.join(mocks, 'robot.json'));
+    var instance = new Options(mocks, {});
+
+    assert.equal(instance.sourcePath, path.join(mocks, input.source));
+    assert.equal(instance.outputPath, path.join(mocks, input.output));
+  });
+
+  it('Should return defaults when no user options were given and options file was not found', function() {
+    var instance = new Options('', {});
+    var defaults = instance.getDefaultOptions();
+
+    assert.equal(instance.sourcePath, path.join('', defaults.source));
+    assert.equal(instance.outputPath, path.join('', defaults.output));
+  });
 
 });
