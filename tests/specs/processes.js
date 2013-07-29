@@ -45,4 +45,30 @@ describe('Processes', function() {
 
   });
 
+  describe('Append includes', function() {
+
+    var sourcePath = path.join(__dirname, '../mocks/processes');
+    var outputPath = path.join(__dirname, '../temp');
+    var target = path.join(outputPath, 'include');
+
+    after(function() {
+      // TODO: rm -rf
+      //fs.unlinkSync(target);
+    });
+
+    it('Should copy the source folder and contents to the target', function(done) {
+      var includes = ['include'];
+
+      processes.appendIncludes(sourcePath, outputPath, includes, function(err) {
+        assert.equal(err, null);
+        assert.equal(fs.existsSync(target), true);
+        assert.equal(fs.existsSync(path.join(target, 'content.xml')), true);
+
+        done();
+      });
+
+    });
+
+  });
+
 });
