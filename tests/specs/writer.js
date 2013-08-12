@@ -1,5 +1,5 @@
-var fs = require('fs');
 var path = require('path');
+var fs = require('fs-extra');
 var assert = require('assert');
 var writer = require('../../lib/robot/writer.js');
 
@@ -48,7 +48,7 @@ describe('Writer', function() {
     var output = path.join(__dirname, '../temp/test.html');
 
     after(function() {
-      fs.unlinkSync(output);
+      fs.removeSync(output);
     });
 
     it('Should write a file with contents to disk', function(done) {

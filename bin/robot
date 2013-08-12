@@ -19,20 +19,26 @@ var usage = [
   '    -o, --output   Output directory'
 ].join('\n');
 
-var cmd = optimist.usage(usage).alias('s', 'source').alias('o', 'output').alias('h', 'help');
-var opts = cmd.argv;
+var cmd = optimist
+  .usage(usage)
+  .alias('s', 'source')
+  .alias('o', 'output')
+  .alias('h', 'help');
 
-if (opts.help) {
+var args = cmd.argv;
+
+var target = path.normalize(process.cwd() + '/' + (args._.length === 2 ? args._.pop() : ''));
+var command = args._.length ? args._.pop() : '';
+
+if (args.help || ! command) {
   optimist.showHelp();
-  process.exit(1);
+  process.exit();
 }
-
-var target = path.normalize(process.cwd() + '/' + (opts._.length === 2 ? opts._.pop() : ''));
-var command = opts._.length ? opts._.pop() : 'No command';
 
 if (interface.hasOwnProperty(command)) {
-  interface[command](target, opts);
+  interface[command](target, args);
 }
 else {
-  console.log('Command "' + command + '" not found.');
+  console.error('Command "' + command + '" not found, use the --help flag to view all available commands');
+  process.exit(1);
 }

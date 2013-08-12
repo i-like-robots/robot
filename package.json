@@ -21,11 +21,10 @@
     "url": "http://maketea.co.uk"
   },
   "dependencies": {
-    "ncp": "0.4.x",
     "async": "0.2.x",
-    "mkdirp": "0.3.x",
     "js-yaml": "1.x.x",
     "walkdir": "0.0.x",
+    "fs-extra": "0.6.x",
     "optimist": "0.3.x",
     "handlebars": "1.0.x"
   },

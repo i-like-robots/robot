@@ -1,6 +1,0 @@
-{
-  "ignore": ["_*", ".*"],
-  "source": "source/",
-  "output": "output/",
-  "verbose": 0
-}

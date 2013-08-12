@@ -1,5 +1,5 @@
-var fs = require('fs');
 var path = require('path');
+var fs = require('fs-extra');
 var assert = require('assert');
 var processes = require('../../lib/robot/processes.js');
 
@@ -27,7 +27,7 @@ describe('Processes', function() {
     var output = path.join(__dirname, '../temp/bar.html');
 
     after(function() {
-      fs.unlinkSync(output);
+      fs.removeSync(output);
     });
 
     it('Should process pages and write to file', function(done) {
@@ -52,8 +52,7 @@ describe('Processes', function() {
     var target = path.join(outputPath, 'include');
 
     after(function() {
-      // TODO: rm -rf
-      //fs.unlinkSync(target);
+      fs.removeSync(target);
     });
 
     it('Should copy the source folder and contents to the target', function(done) {
