@@ -37,7 +37,7 @@
     "robot": "./bin/robot"
   },
   "scripts": {
-    "test": "mocha tests/specs"
+    "test": "mocha tests/specs --reporter spec --recursive"
   },
   "engines": {
     "node": ">=0.8.0"

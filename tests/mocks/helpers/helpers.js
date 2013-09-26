@@ -1,3 +1,3 @@
-exports.foo = function() {};
-
-exports.bar = function() {};
+exports.foo = function() {
+  return 'foo';
+};

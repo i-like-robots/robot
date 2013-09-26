@@ -9,24 +9,41 @@ describe('Helpers', function() {
 
   describe('Register helper', function() {
 
-    it('Should register a Handlebars helper', function() {
-      helpers.registerHelper('baz', function() {});
+    it('Should register a Handlebars block helper', function() {
+      helpers.registerHelper('baz', function() {
+        return 'baz';
+      });
       assert.equal(handlebars.helpers.hasOwnProperty('baz'), true);
+    });
+
+    it('Should make the block helper available to templates', function() {
+      var input = handlebars.compile('{{#repeat 3}}Foo{{/repeat}}');
+
+      helpers.registerHelper('repeat', function(count, options) {
+        var output = "";
+
+        while (count--) {
+          output+= options.fn();
+        }
+
+        return output;
+      });
+
+      assert.equal(input(), 'FooFooFoo');
     });
 
   });
 
   describe('Load helpers', function() {
 
-    it('Should load module from given path and register helpers', function() {
+    it('Should load helpers module from the given path and register methods as block helpers', function() {
       var input = path.join(mocks, 'helpers.js');
 
       helpers.loadHelpers(input);
       assert.equal(handlebars.helpers.hasOwnProperty('foo'), true);
-      assert.equal(handlebars.helpers.hasOwnProperty('bar'), true);
     });
 
-    it('Should remain silent when module cannot be resolved or is invalid', function() {
+    it('Should remain silent when helpers module cannot be resolved or is invalid', function() {
       var input = path.join(mocks, 'doesnotexist.js');
 
       assert.doesNotThrow(function() {

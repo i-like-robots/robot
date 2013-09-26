@@ -6,6 +6,11 @@ var processes = require('../../lib/robot/processes.js');
 describe('Processes', function() {
 
   var mocks = path.join(__dirname, '../mocks');
+  var temp = path.join(__dirname, '../temp/processes');
+
+  after(function(done) {
+    fs.remove(temp, done);
+  });
 
   describe('Read resources', function() {
     it('Should scan and load all resources in series', function(done) {
@@ -22,21 +27,15 @@ describe('Processes', function() {
   });
 
   describe('Write output', function() {
-
-    var target = path.join(__dirname, '../temp');
-    var output = path.join(__dirname, '../temp/bar.html');
-
-    after(function() {
-      fs.removeSync(output);
-    });
+    var targetPath = path.join(temp, 'bar.html');
 
     it('Should process pages and write to file', function(done) {
       var resources = require(path.join(mocks, 'processes/resources.js'));
 
-      processes.writeOutput(target, resources, function(err) {
+      processes.writeOutput(temp, resources, function(err) {
         assert.equal(err, null);
-        assert.equal(fs.existsSync(output), true);
-        assert.equal(fs.readFileSync(output, 'utf-8'), resources.getPages()['bar.html'].getTemplate());
+        assert.equal(fs.existsSync(targetPath), true);
+        assert.equal(fs.readFileSync(targetPath, 'utf-8'), resources.getPages()['bar.html'].getTemplate());
 
         done();
       });
@@ -46,22 +45,16 @@ describe('Processes', function() {
   });
 
   describe('Append includes', function() {
-
     var sourcePath = path.join(__dirname, '../mocks/processes');
-    var outputPath = path.join(__dirname, '../temp');
-    var target = path.join(outputPath, 'include');
-
-    after(function() {
-      fs.removeSync(target);
-    });
+    var targetPath = path.join(temp, 'include');
 
     it('Should copy the source folder and contents to the target', function(done) {
       var includes = ['include'];
 
-      processes.appendIncludes(sourcePath, outputPath, includes, function(err) {
+      processes.appendIncludes(sourcePath, temp, includes, function(err) {
         assert.equal(err, null);
-        assert.equal(fs.existsSync(target), true);
-        assert.equal(fs.existsSync(path.join(target, 'content.xml')), true);
+        assert.equal(fs.existsSync(targetPath), true);
+        assert.equal(fs.existsSync(path.join(targetPath, 'content.xml')), true);
 
         done();
       });

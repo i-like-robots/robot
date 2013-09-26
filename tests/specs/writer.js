@@ -6,6 +6,11 @@ var writer = require('../../lib/robot/writer.js');
 describe('Writer', function() {
 
   var mocks = path.join(__dirname, '../mocks');
+  var temp = path.join(__dirname, '../temp/writer');
+
+  after(function(done) {
+    fs.remove(temp, done);
+  });
 
   describe('Prepare template', function() {
 
@@ -30,10 +35,10 @@ describe('Writer', function() {
   });
 
   describe('Compile page with layout', function() {
-    var inputPage = 'page content';
-    var inputLayout = '<layout>{{{content}}}</layout>';
 
     it('Should return a compiled string', function() {
+      var inputPage = 'page content';
+      var inputLayout = '<layout>{{{content}}}</layout>';
       var result = writer.compilePageWithLayout(inputPage, inputLayout, {});
 
       assert.equal(result, '<layout>page content</layout>');
@@ -41,18 +46,14 @@ describe('Writer', function() {
 
   });
 
-
   describe('Write file to disk', function() {
-    var inputContent = 'foo';
-    var outputPath = path.join(__dirname, '../temp/test.html');
-
-    after(function() {
-      fs.removeSync(outputPath);
-    });
+    var targetPath = path.join(temp, 'test.html');
 
     it('Should write a file with contents to disk', function(done) {
-      writer.writeToDisk(outputPath, inputContent, function(err) {
-        var result = fs.readFileSync(outputPath, 'utf-8');
+      var inputContent = 'foo';
+
+      writer.writeToDisk(targetPath, inputContent, function(err) {
+        var result = fs.readFileSync(targetPath, 'utf-8');
 
         assert.equal(err, null);
         assert.equal(result, inputContent);
