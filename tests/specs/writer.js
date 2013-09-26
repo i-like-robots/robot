@@ -10,7 +10,7 @@ describe('Writer', function() {
   describe('Prepare template', function() {
 
     it('Should return a Handlebars template instance', function() {
-      var output = writer.prepareTemplate('{{foo}}');
+      var output = writer.prepareTemplate('{{content}}');
 
       assert.equal(typeof output, 'function');
     });
@@ -20,16 +20,16 @@ describe('Writer', function() {
   describe('Compile template', function() {
 
     it('Should return a compiled string when given a template and data', function() {
-      var input = 'bar';
-      var template = '{{foo}}';
+      var inputContent = 'bar';
+      var inputTemplate = '<p>{{content}}</p>';
+      var result = writer.compileTemplate(inputTemplate, { content: inputContent });
 
-      assert.equal(writer.compileTemplate(template, { foo: input }), input);
+      assert.equal(result, '<p>bar</p>');
     });
 
   });
 
   describe('Compile page with layout', function() {
-
     var inputPage = 'page content';
     var inputLayout = '<layout>{{{content}}}</layout>';
 
@@ -43,19 +43,19 @@ describe('Writer', function() {
 
 
   describe('Write file to disk', function() {
-
-    var input = 'foo';
-    var output = path.join(__dirname, '../temp/test.html');
+    var inputContent = 'foo';
+    var outputPath = path.join(__dirname, '../temp/test.html');
 
     after(function() {
-      fs.removeSync(output);
+      fs.removeSync(outputPath);
     });
 
     it('Should write a file with contents to disk', function(done) {
-      writer.writeToDisk(output, input, function(err) {
+      writer.writeToDisk(outputPath, inputContent, function(err) {
+        var result = fs.readFileSync(outputPath, 'utf-8');
 
         assert.equal(err, null);
-        assert.equal(fs.readFileSync(output, 'utf-8'), input);
+        assert.equal(result, inputContent);
 
         done();
       });

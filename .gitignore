@@ -2,8 +2,8 @@ skeleton/output/
 node_modules/
 tests/temp/
 coverage/
+report/
 
-.c9revisions
 .DS_Store
 .idea
 .svn
