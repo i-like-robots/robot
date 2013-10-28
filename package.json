@@ -25,7 +25,7 @@
     "js-yaml": "1.x",
     "walkdir": "0.0.x",
     "fs-extra": "0.6.x",
-    "optimist": "0.3.x",
+    "optimist": "0.6.x",
     "handlebars": "1.x"
   },
   "devDependencies": {

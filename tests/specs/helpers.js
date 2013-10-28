@@ -36,19 +36,21 @@ describe('Helpers', function() {
 
   describe('Load helpers', function() {
 
-    it('Should load helpers module from the given path and register methods as block helpers', function() {
-      var input = path.join(mocks, 'helpers.js');
-
-      helpers.loadHelpers(input);
-      assert.equal(handlebars.helpers.hasOwnProperty('foo'), true);
+    it('Should load helpers module from the given path and register methods as block helpers', function(done) {
+      helpers.loadHelpers(mocks, function() {
+        assert.equal(handlebars.helpers.hasOwnProperty('foo'), true);
+        done();
+      });
     });
 
-    it('Should remain silent when helpers module cannot be resolved or is invalid', function() {
-      var input = path.join(mocks, 'doesnotexist.js');
+    it('Should remain silent when helpers module cannot be resolved or is invalid', function(done) {
+      var input = path.join(mocks, 'doesnotexist');
 
       assert.doesNotThrow(function() {
-          helpers.loadHelpers(input);
+          helpers.loadHelpers(input, new Function);
       });
+
+      done();
     });
 
   });
