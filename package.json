@@ -1,7 +1,7 @@
 {
   "name": "robot",
   "description": "A feature limited static HTML generator for rapid prototyping or simple websites. Similar to FireApp, Hammer or Mixture but with the speed and cross-platform compatibility of Node.js.",
-  "version": "0.3.0-dev",
+  "version": "0.3.0",
   "keywords": [
     "flat",
     "static",
@@ -29,9 +29,7 @@
     "handlebars": "1.x"
   },
   "devDependencies": {
-    "mocha": "1.x",
-    "plato": "0.6.x",
-    "istanbul": "0.1.x"
+    "mocha": "1.x"
   },
   "bin": {
     "robot": "./bin/robot"
