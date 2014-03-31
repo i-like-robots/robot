@@ -25,23 +25,30 @@ describe('Writer', function() {
   describe('Compile template', function() {
 
     it('Should return a compiled string when given a template and data', function() {
-      var inputContent = 'bar';
+      var inputData = { content: 'Hello World' };
       var inputTemplate = '<p>{{content}}</p>';
-      var result = writer.compileTemplate(inputTemplate, { content: inputContent });
+      var result = writer.compileTemplate(inputTemplate, inputData);
 
-      assert.equal(result, '<p>bar</p>');
+      assert.equal(result, '<p>Hello World</p>');
     });
 
   });
 
-  describe('Compile page with layout', function() {
+  describe('Compile page', function() {
 
-    it('Should return a compiled string', function() {
-      var inputPage = 'page content';
+    it('Should return a compiled string with layout', function() {
+      var inputPage = 'Hello World';
       var inputLayout = '<layout>{{{content}}}</layout>';
-      var result = writer.compilePageWithLayout(inputPage, inputLayout, {});
+      var result = writer.compilePage(inputPage, inputLayout, {});
 
-      assert.equal(result, '<layout>page content</layout>');
+      assert.equal(result, '<layout>Hello World</layout>');
+    });
+
+    it('Should return a compiled string without layout', function() {
+      var inputPage = 'Hello World';
+      var result = writer.compilePage(inputPage, null, {});
+
+      assert.equal(result, 'Hello World');
     });
 
   });
