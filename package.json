@@ -1,7 +1,7 @@
 {
   "name": "robot",
   "description": "A feature limited static HTML generator for rapid prototyping or simple websites. Similar to FireApp, Hammer or Mixture but with the speed and cross-platform compatibility of Node.js.",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "keywords": [
     "flat",
     "static",
@@ -17,7 +17,6 @@
   "bugs": "https://github.com/i-like-robots/robot/issues",
   "author": {
     "name": "Matt Hinchliffe",
-    "email": "<matt+npm@maketea.co.uk>",
     "url": "http://maketea.co.uk"
   },
   "dependencies": {
